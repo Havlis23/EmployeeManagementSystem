@@ -18,7 +18,6 @@ $edited_by = isset($_SESSION['employee_id']) ? $_SESSION['employee_id'] : null;
 if ($edited_by === null) {
     die("No employee ID found in session. Please make sure to log in before editing records.");
 }
-
 $prace_id = $_POST['prace_id'];
 $name = $_POST['name'];
 $description = $_POST['description'];
