@@ -5,7 +5,7 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Havlis23/HonzovyCheckBoxy.git
+   git clone https://github.com/Havlis23/EmployeeManagementSystem.git
    ```
 
 2. Navigate to the project directory:
