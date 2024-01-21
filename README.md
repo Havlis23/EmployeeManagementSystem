@@ -11,7 +11,7 @@
 2. Navigate to the project directory:
 
    ```bash
-   cd HonzovyCheckBoxy
+   cd EmployeeManagementSystem
    ```
 
 3. Install PHP dependencies:
