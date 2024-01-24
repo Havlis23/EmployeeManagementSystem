@@ -38,6 +38,10 @@ if ($assignedTasksResult->num_rows > 0) {
     ?>
 
 <link rel="stylesheet" href="{{asset('css/assigned-employee.css')}}">
+<!-- Import Poppins font from Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree&display=swap">
 
     <?php
 

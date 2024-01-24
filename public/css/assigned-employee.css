@@ -2,7 +2,7 @@ body {
     padding: 20px;
     height: 100vh;
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Figtree', sans-serif;
     background-color: #171B34;
     color: #D6D8DF;
     line-height: 23px;
@@ -11,6 +11,7 @@ body {
 }
 
 h2 {
+    font-family: 'Poppins', sans-serif;
     font-weight: 500;
     line-height: 30px;
     font-size: 40px;
@@ -60,12 +61,12 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 th, td {
 
-    border: 1px solid #ddd;
+    border: 0.5px solid #ddd;
     padding: 12px;
     text-align: left;
 }
@@ -76,15 +77,20 @@ th {
 }
 
 .back {
-    background-color: #2c3c4d;
-    color: white;
+    background-color: transparent;
+    color: #D6D8DF;
     cursor: pointer;
     padding: 15px 20px;
     font-size: 0.8em;
+    border: 1px solid #D6D8DF;
+}
+.back:hover {
+    background-color: #D6D8DF;
+    color: #171B34;
 }
 
 .navbar {
-    background-color: #2c3c4d;
+    background-color: #292F4C;
     overflow: hidden;
 }
 
