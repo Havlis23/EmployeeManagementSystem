@@ -1,9 +1,9 @@
 <?php
-// Replace these with your database credentials
-$servername = "sql.stredniskola.com";
-$username = "it-davidhavel";
-$password = "aSdf.1234";
-$dbname = "davidhavel";
+
+$servername = "192.168.0.222";
+$username = "remote";
+$password = "password";
+$dbname = "dev";
 
 // Create a connection to the database
 $conn = new mysqli($servername, $username, $password, $dbname);

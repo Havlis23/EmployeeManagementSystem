@@ -2,10 +2,10 @@
 session_start(); // Start the session if it's not already started
 
 // Database connection
-$servername = "sql.stredniskola.com";
-$username = "it-davidhavel";
-$password = "aSdf.1234";
-$dbname = "davidhavel";
+$servername = "192.168.0.222";
+$username = "remote";
+$password = "password";
+$dbname = "dev";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
