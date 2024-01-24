@@ -1,9 +1,9 @@
 <?php
 
-$servername = "192.168.0.222";
-$username = "remote";
-$password = "asdf.1234";
-$dbname = "dev";
+$servername = "sql.stredniskola.com";
+$username = "it-davidhavel";
+$password = "aSdf.1234";
+$dbname = "davidhavel";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -125,7 +125,7 @@ $sqlAssignedTasks = "SELECT z.name AS task_name, e.fname, e.lname
                      JOIN zamestnanci e ON zz.zamestnanci_id = e.id";
 $assignedTasksResult = $conn->query($sqlAssignedTasks);
 
-// Display assigned tasks in a table
+// Display assigned tasks in a table - nefugnuje
 /* if ($assignedTasksResult->num_rows > 0) {
     echo "<h2>Already Assigned Tasks</h2>";
     echo "<table>";
@@ -148,6 +148,7 @@ if ($tasks->num_rows > 0) {
     <a href='/assigned-employees' " . ($currentUrl == '/assigned_employees.php' ? 'class="active"' : '') . ">Přiřazené zakázky</a>
     <a href='/assign-new-employee' " . ($currentUrl == '/admin_new.php' ? 'class="active"' : '') . ">Přiřadit zaměstnance</a>
     <a href='/work-details' " . ($currentUrl == '/work_details.php' ? 'class="active"' : '') . ">Práce</a>
+    <a href='/create-new-task' " . ($currentUrl == '/create-new-task.php' ? 'class="active"' : '') . ">Vytvořit novou zakázku</a>
     </div>";
     while ($task = $tasks->fetch_assoc()) {
         echo "<div>";

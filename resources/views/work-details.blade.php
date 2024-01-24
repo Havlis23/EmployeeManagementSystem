@@ -1,9 +1,9 @@
 <?php
 
-$servername = "192.168.0.222";
-$username = "remote";
-$password = "asdf.1234";
-$dbname = "dev";
+$servername = "sql.stredniskola.com";
+$username = "it-davidhavel";
+$password = "aSdf.1234";
+$dbname = "davidhavel";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -86,9 +86,10 @@ if ($result->num_rows > 0) {
 
     // Output the navbar with the active class dynamically applied
     echo "<div class='navbar'>
-    <a href='/assigned-employees' " . ($currentUrl == '/assigned_employees.php' ? 'class="active"' : '') . ">Přiřazené zakázky</a>
-    <a href='/assign-new-employee' " . ($currentUrl == '/admin_new.php' ? 'class="active"' : '') . ">Přiřadit zaměstnance</a>
-    <a href='work_details.php' " . ($currentUrl == '/work_details.php' ? 'class="active"' : '') . ">Práce</a>
+    <a href='/assigned-employees' " . ($currentUrl == '/assigned-employees.php' ? 'class="active"' : '') . ">Přiřazené zakázky</a>
+    <a href='/assign-new-employee' " . ($currentUrl == '/admin-new.php' ? 'class="active"' : '') . ">Přiřadit zaměstnance</a>
+    <a href='work-details' " . ($currentUrl == '/work-details.php' ? 'class="active"' : '') . ">Práce</a>
+    <a href='/create-new-task' " . ($currentUrl == '/create-new-task.php' ? 'class="active"' : '') . ">Vytvořit novou zakázku</a>
     </div>";
     ?>
     <h2>Práce</h2>

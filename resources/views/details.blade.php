@@ -2,10 +2,10 @@
 
 session_start();
 
-$servername = "192.168.0.222";
-$username = "remote";
-$password = "asdf.1234";
-$dbname = "dev";
+$servername = "sql.stredniskola.com";
+$username = "it-davidhavel";
+$password = "aSdf.1234";
+$dbname = "davidhavel";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -106,6 +106,7 @@ echo "<div class='navbar'>
     <a href='/'>Přihlášení</a>
     <a href='test.php?employee_id=" . $_SESSION['employee_id'] . "'>Detail zaměstnance</a>
     <a href='#'>Něco</a>
+
 </div>";
 
 

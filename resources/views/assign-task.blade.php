@@ -1,10 +1,10 @@
 <?php
 
-$servername = "192.168.0.222";
-$username = "remote";
-$password = "asdf.1234";
-$dbname = "dev";
-
+//connect to database
+$servername = "sql.stredniskola.com";
+$username = "it-davidhavel";
+$password = "aSdf.1234";
+$dbname = "davidhavel";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -13,6 +13,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Create task name and post data
 $task_id = $_POST["task_id"];
 $employee_ids = $_POST["employee_id"];
 
