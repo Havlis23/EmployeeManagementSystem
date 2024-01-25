@@ -15,7 +15,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch data from the database based on the provided schema
 $employee_id = $_POST["employee_id"]; // Retrieve the employee id from the form submission
 
 $sql = "SELECT zakazky.*, zamestnanci.fname, zamestnanci.lname, zamestnanci.employee_number
@@ -28,8 +27,9 @@ $result = $conn->query($sql);
 
 $_SESSION['employee_id'] = $employee_id;
 
-echo "<style>
-.block {
+$htmlOutput = <<<HTML
+<style>
+    .block {
     margin-bottom: 20px;
 }
 label {
@@ -96,73 +96,66 @@ h2 {
     color: black;
 }
 
-</style>";
-
-
+</style>
+HTML;
 
 if ($result->num_rows > 0) {
-    echo "<div class='navbar'>
+    $htmlOutput .= "<div class='navbar'>
     <a href='/'>Přihlášení</a>
-    <a href='test.php?employee_id=" . $_SESSION['employee_id'] . "'>Detail zaměstnance</a>
+    <a href='test.php?employee_id={$_SESSION['employee_id']}'>Detail zaměstnance</a>
     <a href='#'>Něco</a>
     </div>";
-    // Render employee details only once
+
     $row = $result->fetch_assoc();
+    $htmlOutput .= "<h2>Detail zaměstnance</h2>";
+    $htmlOutput .= "<div class='block'>";
+    $htmlOutput .= "<label>Jméno zaměstnance:</label>";
+    $htmlOutput .= "<p>{$row['fname']} {$row['lname']}</p>";
+    $htmlOutput .= "</div>";
+    $htmlOutput .= "<div class='block'>";
+    $htmlOutput .= "<label>ID zaměstnance:</label>";
+    $htmlOutput .= "<p>{$row['employee_number']}</p>";
+    $htmlOutput .= "</div>";
+    $htmlOutput .= "<div class='block'>";
+    $htmlOutput .= "<label>Zaměstnanecké číslo:</label>";
+    $htmlOutput .= "<p>{$row['employee_number']}</p>";
+    $htmlOutput .= "</div>";
 
-        echo "<h2>Detail zaměstnance</h2>";
-        //echo $_SESSION['employee_id'];
-        echo "<div class='block'>";
-        echo "<label>Jméno zaměstnance:</label>";
-        echo "<p>{$row['fname']} {$row['lname']}</p>";
-        echo "</div>";
-        echo "<div class='block'>";
-        echo "<label>ID zaměstnance:</label>";
-        echo "<p>{$row['employee_number']}</p>";
-        echo "</div>";
-        echo "<div class='block'>";
-        echo "<label>Zaměstnanecké číslo:</label>";
-        echo "<p>{$row['employee_number']}</p>";
-        echo "</div>"; // Set the flag to true after rendering details
+    $htmlOutput .= "<h2>Zakazky</h2>";
+    $htmlOutput .= "<table class='zakazky-details'>";
+    $htmlOutput .= "<tr><th>Jméno</th><th>Popis</th><th>Prace ID</th></tr>";
 
-
-    // Render zakazky details for each row
-    echo "<h2>Zakazky</h2>";
-    echo "<table class='zakazky-details'>";
-    echo "<tr><th>Jméno</th><th>Popis</th><th>Prace ID</th></tr>";
-
-    // Loop through all rows
     do {
-        echo "<tr>";
-        echo "<td>{$row['name']}</td>";
-        echo "<td>{$row['description']}</td>";
-        echo "<td>{$row['prace_id']}</td>";
-        echo "<td>";
-        echo "<form action='/details' method='post'>";?>
-        @csrf
-        <?php
-        echo "<input type='hidden' name='prace_id' value='{$row['prace_id']}'>";
-        echo "<button type='submit' class='back'>Zobrazit práci</button>";
-        echo "</form>";
-        echo "</td>";
-        echo "</tr>";
+        $htmlOutput .= "<tr>";
+        $htmlOutput .= "<td>{$row['name']}</td>";
+        $htmlOutput .= "<td>{$row['description']}</td>";
+        $htmlOutput .= "<td>{$row['prace_id']}</td>";
+        $htmlOutput .= "<td>";
+        $htmlOutput .= "<form action='/details' method='post'>";
+        $htmlOutput .= csrf_field();
+        $htmlOutput .= "<input type='hidden' name='prace_id' value='{$row['prace_id']}'>";
+        $htmlOutput .= "<button type='submit' class='back'>Zobrazit práci</button>";
+        $htmlOutput .= "</form>";
+        $htmlOutput .= "</td>";
+        $htmlOutput .= "</tr>";
     } while ($row = $result->fetch_assoc());
 
-    echo "</table>";
-    echo "<button class='back', onclick='goBack()'>Zpět</button>";
+    $htmlOutput .= "</table>";
+    $htmlOutput .= "<button class='back' onclick='goBack()'>Zpět</button>";
 } else {
-    echo "<div class='not-found-message'>";
-    echo "<p>Zaměstnanec s číslem $employee_id nenalezen.</p>";
-    echo "<button class='back', onclick='goBack()'>Zpět</button>";
-    echo "</div>";
+    $htmlOutput .= "<div class='not-found-message'>";
+    $htmlOutput .= "<p>Zaměstnanec s číslem $employee_id nenalezen.</p>";
+    $htmlOutput .= "<button class='back' onclick='goBack()'>Zpět</button>";
+    $htmlOutput .= "</div>";
 }
 
-
-
-echo "<script>
+$htmlOutput .= "<script>
 function goBack() {
   window.history.back();
 }
 </script>";
 
 $conn->close();
+
+echo $htmlOutput;
 ?>
