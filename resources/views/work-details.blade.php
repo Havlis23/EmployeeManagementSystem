@@ -13,7 +13,14 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+?>
 
+
+<link rel="stylesheet" href="{{asset('css/assigned-employee.css')}}">
+
+<?php
+
+/*
 echo "<style>
     body {
         padding: 20px;
@@ -70,7 +77,7 @@ echo "<style>
         background-color: #ddd;
         color: black;
     }
-</style>";
+</style>";*/
 
 // Get the current URL for the navbar
 $currentUrl = $_SERVER['REQUEST_URI'];

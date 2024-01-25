@@ -74,3 +74,9 @@ Route::post('/create-new-task', function () {
 
     $conn->close();
 });
+/*Route::get('/login', function () {
+    return view('login');
+});
+Route::post('/login', function () {
+    return view('assigned-employees');
+});*/
