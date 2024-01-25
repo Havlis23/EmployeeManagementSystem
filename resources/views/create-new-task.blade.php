@@ -16,12 +16,17 @@ if ($conn->connect_error) {
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve task name from the form
-    $task_name = $_POST["tname"];
+    $task_name = $_POST["name"];
     $description = $_POST["description"];
     $prace_id = $_POST["prace_id"];
+    $date_of_issue = date('Y-m-d H:i:s'); // Current timestamp
+    $date_of_delivery = date('Y-m-d H:i:s'); // Current timestamp
+    $date_created = date('Y-m-d H:i:s'); // Current timestamp
+    $quantity = $_POST["quantity"]; // Assuming you have a quantity field in your form
 
     // Insert the new task into the database with the current timestamp
-    $sql = "INSERT INTO zakazky (name, date_created) VALUES ('$task_name', '$description$','$prace_id', NOW())";
+    $sql = "INSERT INTO zakazky (name, description, prace_id, date_of_issue, date_of_delivery, date_created, quantity)
+            VALUES ('$task_name', '$description', '$prace_id', '$date_of_issue', '$date_of_delivery', '$date_created', '$quantity')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Zakázka byla úspěšně vytvořena!";
@@ -206,6 +211,9 @@ $conn->close();
     <br>
     <label for="description">Prace ID</label>
     <input type="text" name="prace_id">
+    <br>
+    <label for="quantity">Počet ks</label>
+    <input type="text" name="quantity">
     <br>
     <input type="submit" value="Vytvořit zakázku">
 </form>
