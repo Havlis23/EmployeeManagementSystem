@@ -152,7 +152,7 @@ if ($tasks->num_rows > 0) {
     </div>";
     while ($task = $tasks->fetch_assoc()) {
         echo "<div>";
-        echo "<h2>Task: " . $task["name"] . "</h2>";
+        echo "<h2>Zakázka: " . $task["name"] . "</h2>";
         echo "<form method='POST' action='/assign-task'>";?>
         @csrf
         <?php

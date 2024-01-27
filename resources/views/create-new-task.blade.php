@@ -1,42 +1,5 @@
 <?php
 
-$servername = "192.168.0.222";
-$username = "remote";
-$password = "password";
-$dbname = "dev";
-
-// Create a connection to the database
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check the connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve task name from the form
-    $task_name = $_POST["name"];
-    $description = $_POST["description"];
-    $prace_id = $_POST["prace_id"];
-    $date_of_issue = date('Y-m-d H:i:s'); // Current timestamp
-    $date_of_delivery = date('Y-m-d H:i:s'); // Current timestamp
-    $date_created = date('Y-m-d H:i:s'); // Current timestamp
-    $quantity = $_POST["quantity"]; // Assuming you have a quantity field in your form
-
-    // Insert the new task into the database with the current timestamp
-    $sql = "INSERT INTO zakazky (name, description, prace_id, date_of_issue, date_of_delivery, date_created, quantity)
-            VALUES ('$task_name', '$description', '$prace_id', '$date_of_issue', '$date_of_delivery', '$date_created', '$quantity')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "Zakázka byla úspěšně vytvořena!";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-}
-
-// Close the database connection
-$conn->close();
 ?>
 
     <!DOCTYPE html>
