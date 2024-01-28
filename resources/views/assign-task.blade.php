@@ -1,10 +1,9 @@
 <?php
 
-//connect to database
-$servername = "192.168.0.222";
-$username = "remote";
-$password = "password";
-$dbname = "dev";
+$servername = env('DB_HOST');
+$username = env('DB_USERNAME');
+$password = env('DB_PASSWORD');
+$dbname = env('DB_DATABASE');
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
