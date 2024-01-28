@@ -1,8 +1,6 @@
 <?php
 
 
-
-
 //load connection from .env file
 $servername = env('DB_HOST');
 $username = env('DB_USERNAME');
