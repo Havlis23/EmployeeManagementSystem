@@ -20,13 +20,65 @@ $currentUrl = $_SERVER['REQUEST_URI'];
 
 // Fetch data from the database based on the provided schema
 $prace_id = $_POST["prace_id"]; // Retrieve the prace id from the form submission
+$zakazky_id = $_POST["zakazky_id"]; // Retrieve the zakazky id from the form submission
 
 // Select only from the prace table
-$sql = "SELECT * FROM prace WHERE id = $prace_id";
+$sql = "SELECT prace.*, zakazky.name as zakazky_name, zakazky.description as zakazky_description
+        FROM zakazky
+        INNER JOIN prace_zakazky ON zakazky.id = prace_zakazky.zakazky_id
+        INNER JOIN prace ON prace_zakazky.prace_id = prace.id
+        WHERE zakazky.id = $zakazky_id";
 $result = $conn->query($sql);
 
 $htmlOutput = <<<HTML
 <style>
+ form {
+        display: table;
+        margin: auto;
+        border-collapse: collapse;
+        border: 1px solid #ccc;
+    }
+
+    label {
+        display: table-cell;
+        padding: 10px;
+        font-size: 1em;
+        text-align: right;
+        vertical-align: middle;
+    }
+
+    input {
+        display: table-cell;
+        padding: 10px;
+        font-size: 1em;
+    }
+
+    input[type='submit'] {
+        display: table-footer-group;
+        margin: 10px auto;
+        padding: 10px 20px;
+    }
+
+       table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    /* Styles for the table header */
+    th {
+        background-color: #2c3c4d;
+        color: white;
+        padding: 10px;
+        text-align: left;
+    }
+
+    /* Styles for the table data */
+    td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: left;
+    }
     .prace-details {
         width: 100%;
         border-collapse: collapse;
@@ -120,26 +172,22 @@ $htmlOutput .= "<div class='navbar'>
 </div>";
 
 if ($result->num_rows > 0) {
+    // Start the table
+    $htmlOutput .= "<table>";
+    $htmlOutput .= "<tr><th>Prace Name</th><th>Prace Description</th><th>Zakazky Name</th><th>Zakazky Description</th></tr>";
+
     // Fetch the data and display it on the new site
     while ($row = $result->fetch_assoc()) {
-        // Display the data from the prace table
-
-        $htmlOutput .= "<h2>Prace Details </h2>";
-        $htmlOutput .= "<h3>Session id:</h3>";
-        $htmlOutput .= $_SESSION['employee_id'];
-        $htmlOutput .= "<form action='/update' method='post'>";
-        $htmlOutput .= csrf_field();
-        $htmlOutput .= "<label for='name'>Name:</label>";
-        $htmlOutput .= "<input type='text' id='name' name='name' value='{$row['name']}'><br>";
-        $htmlOutput .= "<label for='description'>Description:</label>";
-        $htmlOutput .= "<input type='text' id='description' name='description' value='{$row['description']}'><br>";
-        $htmlOutput .= "<label for='checkbox'>Checkbox:</label>";
-        $htmlOutput .= "<input type='text' id='checkbox' name='checkbox' value='{$row['checkbox']}'><br>";
-        $htmlOutput .= "<input type='hidden' name='prace_id' value='{$row['id']}'>";
-        $htmlOutput .= "<input type='submit' value='Update'>";
-        $htmlOutput .= "<a href='" . getReferer() . "' class='back'>Zpět</a>";
-        $htmlOutput .= "</form>";
+        $htmlOutput .= "<tr>";
+        $htmlOutput .= "<td>{$row['name']}</td>";
+        $htmlOutput .= "<td>{$row['description']}</td>";
+        $htmlOutput .= "<td>{$row['zakazky_name']}</td>";
+        $htmlOutput .= "<td>{$row['zakazky_description']}</td>";
+        $htmlOutput .= "</tr>";
     }
+
+    // End the table
+    $htmlOutput .= "</table>";
 } else {
     $htmlOutput .= "Prace not found.";
 }

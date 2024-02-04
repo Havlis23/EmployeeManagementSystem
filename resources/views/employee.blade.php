@@ -1,6 +1,7 @@
 <?php
 session_start(); // Start the session if it's not already started
 
+
 $servername = env('DB_HOST');
 $username = env('DB_USERNAME');
 $password = env('DB_PASSWORD');
@@ -16,7 +17,7 @@ if ($conn->connect_error) {
 
 $employee_id = $_POST["employee_id"]; // Retrieve the employee id from the form submission
 
-$sql = "SELECT zakazky.*, zamestnanci.fname, zamestnanci.lname, zamestnanci.employee_number
+$sql = "SELECT zakazky.*, zakazky.id as zakazky_id, zamestnanci.fname, zamestnanci.lname, zamestnanci.employee_number
         FROM zakazky
         JOIN zakazky_zamestnanci ON zakazky.id = zakazky_zamestnanci.zakazky_id
         JOIN zamestnanci ON zakazky_zamestnanci.zamestnanci_id = zamestnanci.id
@@ -103,12 +104,13 @@ if ($result->num_rows > 0) {
     <a href='/'>Přihlášení</a>
     <a href='test.php?employee_id={$_SESSION['employee_id']}'>Detail zaměstnance</a>
     <a href='#'>Něco</a>
+    <a href='#'>Něco</a>
     </div>";
 
     $row = $result->fetch_assoc();
     $htmlOutput .= "<h2>Detail zaměstnance</h2>";
     $htmlOutput .= "<div class='block'>";
-    $htmlOutput .= "<label>Jméno zaměstnance:</label>";
+    $htmlOutput .= "<label>Přihlášený zaměstnanec:</label>";
     $htmlOutput .= "<p>{$row['fname']} {$row['lname']}</p>";
     $htmlOutput .= "</div>";
     $htmlOutput .= "<div class='block'>";
@@ -120,19 +122,20 @@ if ($result->num_rows > 0) {
     $htmlOutput .= "<p>{$row['employee_number']}</p>";
     $htmlOutput .= "</div>";
 
-    $htmlOutput .= "<h2>Zakazky</h2>";
+    $htmlOutput .= "<h2>Zakázky</h2>";
     $htmlOutput .= "<table class='zakazky-details'>";
-    $htmlOutput .= "<tr><th>Jméno</th><th>Popis</th><th>Prace ID</th></tr>";
+    $htmlOutput .= "<tr><th>Číslo zakázky</th><th>Prace ID</th><th>Zakazka ID</th></tr>";
 
     do {
         $htmlOutput .= "<tr>";
         $htmlOutput .= "<td>{$row['name']}</td>";
-        $htmlOutput .= "<td>{$row['description']}</td>";
         $htmlOutput .= "<td>{$row['prace_id']}</td>";
+        $htmlOutput .= "<td>{$row['zakazky_id']}</td>";
         $htmlOutput .= "<td>";
         $htmlOutput .= "<form action='/details' method='post'>";
         $htmlOutput .= csrf_field();
         $htmlOutput .= "<input type='hidden' name='prace_id' value='{$row['prace_id']}'>";
+        $htmlOutput .= "<input type='hidden' name='zakazky_id' value='{$row['zakazky_id']}'>";
         $htmlOutput .= "<button type='submit' class='back'>Zobrazit práci</button>";
         $htmlOutput .= "</form>";
         $htmlOutput .= "</td>";
@@ -140,7 +143,7 @@ if ($result->num_rows > 0) {
     } while ($row = $result->fetch_assoc());
 
     $htmlOutput .= "</table>";
-    $htmlOutput .= "<button class='back' onclick='goBack()'>Zpět</button>";
+    $htmlOutput .= "<button class='back' onclick<='goBack()'>Zpět</button>";
 } else {
     $htmlOutput .= "<div class='not-found-message'>";
     $htmlOutput .= "<p>Zaměstnanec s číslem $employee_id nenalezen.</p>";
